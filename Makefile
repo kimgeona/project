@@ -24,8 +24,13 @@ endif
 # Makefile 정보 출력
 info:
 	@echo
-	@echo "-- project_opencv --"
-	@echo "-- Geona Kim, kimgeona77@gmail.com --"
+	@echo "-- project_opencv"
+	@echo "-- https://github.com/kimgeona/project_opencv.git"
+	@echo "-- $(PROJECT_NAME)"
+	@echo "-- $(PROJECT_REPO)"
+	@echo 
+	@echo "-- Writer : "
+	@echo "-- Geona Kim, kimgeona77@gmail.com"
 	@echo
 
 # OpenCV 라이브러리 설치 및 빌드
