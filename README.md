@@ -7,7 +7,7 @@ This Makefile is currently in the process of being written and is a version that
 I'll commit it as soon as possible to get it running cleanly on Windows as well.   
 현재 레파지토리에있는 Makefile은 최신 OpenCV라이브러리를 다운받고 빌드하여 자동으로 IDE 프로젝트를 생성해줍니다.   
 현재 해당 Makefile은 작성 과정 중에 있고 MacOS의 Xcode에서 확실하게 지원되는 버전입니다.   
-가능한 빨리 Windows에서도 깔끔하게 작동이 가능하도록 커밋하도록 하겠습니다.   
+가능한 빨리 Windows에서도 깔끔하게 작동이 가능하도록 커밋할 예정입니다.   
    
 Thank you.   
 감사합니다.   
