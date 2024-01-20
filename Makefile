@@ -42,7 +42,7 @@ install:
 		echo "install : OpenCV 라이브러리를 다운받습니다."; \
 		git clone https://github.com/opencv/opencv.git; \
 	fi
-	@if [ -d opencv_build]; \
+	@if [ -d opencv_build ]; \
 	then \
 		echo "install : 이미 빌드된 OpenCV 라이브러리가 존재합니다."; \
 	else \
