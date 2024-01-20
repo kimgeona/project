@@ -32,18 +32,18 @@ info:
 install:
 	@if [ -d opencv ]; \
 	then \
-		@echo "install : 이미 설치된 OpenCV 라이브러리를 사용합니다."; \
+		echo "install : 이미 설치된 OpenCV 라이브러리를 사용합니다."; \
 	else \
-		@echo "install : OpenCV 라이브러리를 다운받습니다."; \
-		@git clone https://github.com/opencv/opencv.git; \
+		echo "install : OpenCV 라이브러리를 다운받습니다."; \
+		git clone https://github.com/opencv/opencv.git; \
 	fi
 	@if [ -d opencv_build]; \
 	then \
-		@echo "install : 이미 빌드된 OpenCV 라이브러리가 존재합니다."; \
+		echo "install : 이미 빌드된 OpenCV 라이브러리가 존재합니다."; \
 	else \
-		@echo "install : OpenCV 라이브러리를 빌드합니다."; \
-		@cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -S./opencv -B./opencv_build; \
-		@cmake --build ./opencv_build -j7; \
+		echo "install : OpenCV 라이브러리를 빌드합니다."; \
+		cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -S./opencv -B./opencv_build; \
+		cmake --build ./opencv_build -j7; \
 	fi
 	@echo "install : 완료."
 
