@@ -1,9 +1,11 @@
 # folders
-learning_opencv/
-learning_opencv_build/
 opencv/
 opencv_build/
 opencv_install/
+learning_opencv/
+learning_opencv_build/
+project_template/
+project_template_build/
 
 # MacOS ignore
 .DS_Store
