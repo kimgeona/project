@@ -1,4 +1,4 @@
-# project_opencv
+# project
 Install the latest OpenCV library and build IDE project with one Makefile.   
 하나의 Makefile로 OpenCV 라이브러리 설치 및 빌드와 IDE 프로젝트 생성.   
 
