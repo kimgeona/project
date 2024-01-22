@@ -1,0 +1,9 @@
+# MacOS folder
+./opencv/
+./opencv_build/
+./opencv_install/
+
+# Windows folder
+.\\opencv\\
+.\\opencv_build\\
+.\\opencv_install\\
