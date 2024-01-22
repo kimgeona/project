@@ -59,7 +59,7 @@ ifeq ($(OS_NAME), MACOS)
 	@echo "-- $(PROJECT_NAME) : $(PROJECT_REPO)"
 	@echo "--"
 	@echo "-- Writer : "
-	@echo "--   Geona Kim
+	@echo "--   Geona Kim"
 	@echo "--   kimgeona77@gmail.com"
 	@echo "--"
 endif
@@ -92,11 +92,12 @@ ifeq ($(OS_NAME), MACOS)
 		echo "install : 이미 빌드된 OpenCV 라이브러리가 존재합니다."; \
 	else \
 		echo "install : OpenCV 라이브러리를 빌드합니다."; \
-		@cmake -GXocde -DBUILD_EXAMPLES=ON -DINSTALL_CREATE_DISTRIB=ON -DCMAKE_INSTALL_PREFIX=.\\opencv_install -S.\\opencv -B.\\opencv_build; \
-		cmake --build .\\opencv_build -j7 --config debug; \
-		cmake --build .\\opencv_build -j7 --config release; \
-		cmake --build .\\opencv_build -j7 --target install --config debug; \
-		cmake --build .\\opencv_build -j7 --target install --config release; \
+		mkdir opencv_build; \
+		cmake -GXcode -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX=./opencv_install -S./opencv -B./opencv_build; \
+		cmake --build ./opencv_build -j7 --config debug; \
+		cmake --build ./opencv_build -j7 --config release; \
+		cmake --build ./opencv_build -j7 --target install --config debug; \
+		cmake --build ./opencv_build -j7 --target install --config release; \
 	fi
 	@echo "install : 완료."
 endif

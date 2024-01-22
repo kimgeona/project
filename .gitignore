@@ -6,4 +6,5 @@ opencv_build/
 opencv_install/
 
 # MacOS ignore
+.DS_Store
 # Windows ignore
