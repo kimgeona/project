@@ -69,7 +69,7 @@ ifeq ($(OS_NAME), WIN32)
 	@echo -- project_opencv : https://github.com/kimgeona/project_opencv.git
 	@echo -- $(PROJECT_NAME) : $(PROJECT_REPO)
 	@echo --
-	@echo -- OpenCV ENV Path : $(CURDIR_WIN)\opencv_install\x64\vc17\bin
+	@echo -- OpenCV Path : $(shell dir /s /b /ad $(CURDIR_WIN)\opencv_install\x64\bin | findstr "vc*")
 	@echo --
 	@echo -- Writer : 
 	@echo --   Geona Kim
@@ -78,7 +78,7 @@ ifeq ($(OS_NAME), WIN32)
 endif
 
 # OpenCV 라이브러리 설치 및 빌드
-install:
+install_opencv:
 ifeq ($(OS_NAME), MACOS)
 	@if [ -d opencv ]; \
 	then \
@@ -103,18 +103,28 @@ ifeq ($(OS_NAME), MACOS)
 endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
-	@git clone https://github.com/opencv/opencv.git
-	@cmake -G"Visual Studio 16 2019" -A x64 -DBUILD_EXAMPLES=ON -DINSTALL_CREATE_DISTRIB=ON -DCMAKE_INSTALL_PREFIX=.\\opencv_install -S.\\opencv -B.\\opencv_build
-	@cmake --build .\\opencv_build -j7 --config debug
-	@cmake --build .\\opencv_build -j7 --config release
-	@cmake --build .\\opencv_build -j7 --target install --config debug
-	@cmake --build .\\opencv_build -j7 --target install --config release
-	@echo --
-	@echo --
-	@echo -- !중요!
-	@echo -- 환경변수 Path에 $(CURDIR_WIN)\opencv_install\x64\vc17\bin를 추가하세요.
-	@echo -- 
-	@echo --
+	@if exist opencv ( \
+		echo install : 이미 설치된 OpenCV 라이브러리를 사용합니다. \
+	) else ( \
+		echo install : OpenCV 라이브러리를 다운받습니다. & \
+		git clone https://github.com/opencv/opencv.git \
+	)
+	@if exist opencv_build ( \
+		echo install : 이미 빌드된 OpenCV 라이브러리가 존재합니다. \
+	) else ( \
+		echo install : OpenCV 라이브러리를 빌드합니다.. & \
+		cmake -G"Visual Studio 16 2019" -A x64 -DBUILD_EXAMPLES=ON -DINSTALL_CREATE_DISTRIB=ON -DCMAKE_INSTALL_PREFIX=.\\opencv_install -S.\\opencv -B.\\opencv_build & \
+		cmake --build .\\opencv_build -j7 --config debug & \
+		cmake --build .\\opencv_build -j7 --config release & \
+		cmake --build .\\opencv_build -j7 --target install --config debug & \
+		cmake --build .\\opencv_build -j7 --target install --config release & \
+		echo -- & \
+		echo -- & \
+		echo -- !중요! & \
+		echo -- 환경변수 Path에 $(shell dir /s /b /ad $(CURDIR_WIN)\opencv_install\x64\bin | findstr "vc*")를 추가하세요. & \
+		echo -- & \
+		echo -- \
+	)
 endif
 
 # OpenCV 프로젝트 생성
@@ -138,8 +148,18 @@ ifeq ($(OS_NAME), MACOS)
 endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
-	@git clone $(PROJECT_REPO)
-	@cmake -S.\\$(PROJECT_NAME) -B.\\$(PROJECT_NAME)_build -G "Visual Studio 17 2022" -A x64 -DOpenCV_DIR=..\\opencv_build
+	@if exist $(PROJECT_NAME) ( \
+		echo project : 프로젝트 $(PROJECT_NAME)가 이미 존재합니다. \
+	) else ( \
+		echo project : 프로젝트 $(PROJECT_NAME)를 git clone 합니다. & \
+		git clone $(PROJECT_REPO) \
+	)
+	@if exist $(PROJECT_NAME)_build ( \
+		echo project : 프로젝트 $(PROJECT_NAME)_build가 이미 존재합니다. \
+	) else ( \
+		echo project : 프로젝트 $(PROJECT_NAME)를 빌드 합니다. & \
+		cmake -S.\\$(PROJECT_NAME) -B.\\$(PROJECT_NAME)_build -G "Visual Studio 17 2022" -A x64 -DOpenCV_DIR=..\\opencv_build \
+	)
 endif
 
 
@@ -157,16 +177,16 @@ endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
 	@echo clean_install : OpenCV 라이브러리를 삭제합니다.
-	@rmdir /s /q .\\opencv
+	@if exist .\opencv rmdir /s /q .\opencv
 	@echo clean_install : OpenCV 라이브러리 빌드를 삭제합니다.
-	@rmdir /s /q .\\opencv_build
+	@if exist .\opencv_build rmdir /s /q .\opencv_build
 	@echo clean_install : OpenCV 라이브러리 install을 삭제합니다.
-	@rmdir /s /q .\\opencv_install
+	@if exist .\opencv_install rmdir /s /q .\opencv_install
 	@echo clean_install : 완료.
 	@echo --
 	@echo --
 	@echo -- !알림!
-	@echo -- 환경변수 Path에 $(CURDIR_WIN)\opencv_install\x64\vc17\bin를 추가하세요.
+	@echo -- 환경변수 Path에 $(shell dir /s /b /ad $(CURDIR_WIN)\opencv_install\x64\bin | findstr "vc*")를 제거하세요.
 	@echo --
 	@echo --
 endif
@@ -184,8 +204,8 @@ endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
 	@echo clean_project : $(PROJECT_NAME)를 삭제합니다.
-	@rmdir /s /q .\\$(PROJECT_NAME)
+	@if exist .\$(PROJECT_NAME) rmdir /s /q .\$(PROJECT_NAME)
 	@echo clean_project : $(PROJECT_NAME)_build를 삭제합니다.
-	@rmdir /s /q .\\$(PROJECT_NAME)_build
+	@if exist .\$(PROJECT_NAME)_build rmdir /s /q .\$(PROJECT_NAME)_build
 	@echo clean_project : 완료.
 endif
