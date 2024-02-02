@@ -1,5 +1,5 @@
 # 사용자 지정 매크로
-PROJECT_REPO=https://github.com/kimgeona/learning_opencv.git	# OpenCV 프로젝트 git 주소 
+PROJECT_REPO=https://github.com/kimgeona/project_template.git	# git 프로젝트 주소 
 
 # 매크로들
 PROJECT_NAME=$(basename $(notdir $(PROJECT_REPO)))
