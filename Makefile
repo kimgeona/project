@@ -38,7 +38,9 @@ ifeq ($(OS_NAME), MACOS)
 	@echo "  make clean_project     : git 프로젝트를 제거합니다"
 	@echo 
 	@echo "주의 사항:"
-	@echo "  Windows 운영영체제는 라이브러리 설치 완료 후 환경변수 설정에 유의해 주세요. 환경변수에 대한 설정은 make info 명령어를 통해 다시 확인할 수 있습니다."
+	@echo "  * 현재 Makefile이 담겨져 있는 폴더의 디렉토리가 변경되면 안됨.(이름 포함)"
+	@echo "  * 현재 Makefile로 생성된 라이브러리들과 프로젝트는 가능한 제공되는 명령어로의 접근을 우선적으로 고려할 것."
+	@echo "  * Windows 운영영체제는 라이브러리 설치 완료 후 환경변수 설정에 유의해 주세요. 환경변수에 대한 설정은 make info 명령어를 통해 다시 확인할 수 있습니다."
 	@echo
 	@echo "추가적인 도움말:"
 	@echo "  https://github.com/kimgeona/project"
@@ -60,7 +62,9 @@ ifeq ($(OS_NAME), WIN32)
 	@echo   make clean_project     : git 프로젝트를 제거합니다
 	@echo.
 	@echo 주의 사항:
-	@echo   Windows 운영영체제는 라이브러리 설치 완료 후 환경변수 설정에 유의해 주세요. 환경변수에 대한 설명은 make info 명령어를 통해 다시 확인할 수 있습니다.
+	@echo   * 현재 Makefile이 담겨져 있는 폴더의 디렉토리가 변경되면 안됨.(이름 포함)
+	@echo   * 현재 Makefile로 생성된 라이브러리들과 프로젝트는 가능한 제공되는 명령어로의 접근을 우선적으로 고려할 것.
+	@echo   * Windows 운영영체제는 라이브러리 설치 완료 후 환경변수 설정에 유의해 주세요. 환경변수에 대한 설정은 make info 명령어를 통해 다시 확인할 수 있습니다.
 	@echo.
 	@echo 추가적인 도움말:
 	@echo   https://github.com/kimgeona/project
