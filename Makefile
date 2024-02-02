@@ -19,62 +19,95 @@ else
 	endif
 endif
 
-# OpenCV 프로젝트 생성
 .PHONY: help check info install project clean_install clean_project
 
-# Makefile 정보 출력
+# 도움말 출력
 help:
 ifeq ($(OS_NAME), MACOS)
+	@echo
+	@echo "사용 예시:"
+	@echo "  make 명령어"
 	@echo 
-	@echo "명령어 도움말"
-	@echo ""
+	@echo "명령어 종류:"
+	@echo "  make help              : 도움말"
+	@echo "  make check             : 설치되어야 하는 프로그램들을 확인"
+	@echo "  make info              : 해당 Makefile와 설치 관련 정보들"
+	@echo "  make install_opencv    : 최신의 OpenCV 라이브러리 설치"
+	@echo "  make clean_opencv      : 설치된 OpenCV 라이브러리 제거"
+	@echo "  make project           : git 프로젝트를 불러오고 각각의 운영체제에 맞는 IDE 프로젝트를 생성"
+	@echo "  make clean_project     : git 프로젝트를 제거합니다"
+	@echo 
+	@echo "주의 사항:"
+	@echo "  Windows 운영영체제는 라이브러리 설치 완료 후 환경변수 설정에 유의해 주세요. 환경변수에 대한 설정은 make info 명령어를 통해 다시 확인할 수 있습니다."
+	@echo
+	@echo "추가적인 도움말:"
+	@echo "  https://github.com/kimgeona/project"
 	@echo
 endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
-	@echo 작성중...
+	@echo.
+	@echo 사용 예시:
+	@echo   make 명령어
+	@echo.
+	@echo 명령어 종류:
+	@echo   make help              : 도움말
+	@echo   make check             : 설치되어야 하는 프로그램들을 확인
+	@echo   make info              : 해당 Makefile와 설치 관련 정보들
+	@echo   make install_opencv    : 최신의 OpenCV 라이브러리 설치
+	@echo   make clean_opencv      : 설치된 OpenCV 라이브러리 제거
+	@echo   make project           : git 프로젝트를 불러오고 각각의 운영체제에 맞는 IDE 프로젝트를 생성
+	@echo   make clean_project     : git 프로젝트를 제거합니다
+	@echo.
+	@echo 주의 사항:
+	@echo   Windows 운영영체제는 라이브러리 설치 완료 후 환경변수 설정에 유의해 주세요. 환경변수에 대한 설명은 make info 명령어를 통해 다시 확인할 수 있습니다.
+	@echo.
+	@echo 추가적인 도움말:
+	@echo   https://github.com/kimgeona/project
+	@echo.
 endif
 
+# 설치 확인
 check:
 ifeq ($(OS_NAME), MACOS)
-	@echo "--"
-	@echo "-- make  : $(shell which make)"
-	@echo "-- cmake : $(shell which cmake)"
-	@echo "-- git   : $(shell which git)"
-	@echo "--"
+	@echo
+	@echo "  make  : $(shell which make)"
+	@echo "  cmake : $(shell which cmake)"
+	@echo "  git   : $(shell which git)"
+	@echo
 endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
-	@echo --
-	@echo -- make  : $(shell where make)
-	@echo -- cmake : $(shell where cmake)
-	@echo -- git   : $(shell where git)
-	@echo --
+	@echo.
+	@echo   make  : $(shell where make)
+	@echo   cmake : $(shell where cmake)
+	@echo   git   : $(shell where git)
+	@echo.
 endif
 
 info:
 ifeq ($(OS_NAME), MACOS)
-	@echo "--"
-	@echo "-- project_opencv : https://github.com/kimgeona/project_opencv.git"
-	@echo "-- $(PROJECT_NAME) : $(PROJECT_REPO)"
-	@echo "--"
-	@echo "-- Writer : "
-	@echo "--   Geona Kim"
-	@echo "--   kimgeona77@gmail.com"
-	@echo "--"
+	@echo
+	@echo "  project_opencv : https://github.com/kimgeona/project_opencv.git"
+	@echo "  $(PROJECT_NAME) : $(PROJECT_REPO)"
+	@echo
+	@echo "  Writer : "
+	@echo "    Geona Kim"
+	@echo "    kimgeona77@gmail.com"
+	@echo
 endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
-	@echo --
-	@echo -- project_opencv : https://github.com/kimgeona/project_opencv.git
-	@echo -- $(PROJECT_NAME) : $(PROJECT_REPO)
-	@echo --
-	@echo -- OpenCV Path : $(shell dir /s /b /ad $(CURDIR_WIN)\opencv_install\x64\bin | findstr "vc*")
-	@echo --
-	@echo -- Writer : 
-	@echo --   Geona Kim
-	@echo --   kimgeona77@gmail.com
-	@echo --
+	@echo.
+	@echo   project_opencv : https://github.com/kimgeona/project_opencv.git
+	@echo   $(PROJECT_NAME) : $(PROJECT_REPO)
+	@echo.
+	@echo   OpenCV Path : $(shell dir /s /b /ad $(CURDIR_WIN)\opencv_install\x64\bin | findstr "vc*")
+	@echo.
+	@echo   Writer : 
+	@echo     Geona Kim
+	@echo     kimgeona77@gmail.com
+	@echo.
 endif
 
 # OpenCV 라이브러리 설치 및 빌드
