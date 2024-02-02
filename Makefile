@@ -19,7 +19,7 @@ else
 	endif
 endif
 
-.PHONY: help check info install project clean_install clean_project
+.PHONY: help check info install install_opencv project clean_install clean_project
 
 # 도움말 출력
 help:
@@ -32,6 +32,7 @@ ifeq ($(OS_NAME), MACOS)
 	@echo "  make help              : 도움말"
 	@echo "  make check             : 설치되어야 하는 프로그램들을 확인"
 	@echo "  make info              : 해당 Makefile와 설치 관련 정보들"
+	@echo "  make install           : 지원되는 최신 C/C++ 라이브러리 전부 설치"
 	@echo "  make install_opencv    : 최신의 OpenCV 라이브러리 설치"
 	@echo "  make clean_opencv      : 설치된 OpenCV 라이브러리 제거"
 	@echo "  make project           : git 프로젝트를 불러오고 각각의 운영체제에 맞는 IDE 프로젝트를 생성"
@@ -56,6 +57,7 @@ ifeq ($(OS_NAME), WIN32)
 	@echo   make help              : 도움말
 	@echo   make check             : 설치되어야 하는 프로그램들을 확인
 	@echo   make info              : 해당 Makefile와 설치 관련 정보들
+	@echo   make install           : 지원되는 최신 C/C++ 라이브러리 전부 설치
 	@echo   make install_opencv    : 최신의 OpenCV 라이브러리 설치
 	@echo   make clean_opencv      : 설치된 OpenCV 라이브러리 제거
 	@echo   make project           : git 프로젝트를 불러오고 각각의 운영체제에 맞는 IDE 프로젝트를 생성
@@ -92,7 +94,7 @@ endif
 info:
 ifeq ($(OS_NAME), MACOS)
 	@echo
-	@echo "  project_opencv : https://github.com/kimgeona/project_opencv.git"
+	@echo "  project : https://github.com/kimgeona/project.git"
 	@echo "  $(PROJECT_NAME) : $(PROJECT_REPO)"
 	@echo
 	@echo "  Writer : "
@@ -103,7 +105,7 @@ endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
 	@echo.
-	@echo   project_opencv : https://github.com/kimgeona/project_opencv.git
+	@echo   project : https://github.com/kimgeona/project.git
 	@echo   $(PROJECT_NAME) : $(PROJECT_REPO)
 	@echo.
 	@echo   OpenCV Path : $(shell dir /s /b /ad $(CURDIR_WIN)\opencv_install\x64\bin | findstr "vc*")
@@ -113,6 +115,9 @@ ifeq ($(OS_NAME), WIN32)
 	@echo     kimgeona77@gmail.com
 	@echo.
 endif
+
+# 지원되는 라이브러리 전체 다운 및 빌드
+install: install_opencv
 
 # OpenCV 라이브러리 설치 및 빌드
 install_opencv:
