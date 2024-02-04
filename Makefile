@@ -1,9 +1,11 @@
-# 사용자 지정 매크로
-PROJECT_REPO=https://github.com/kimgeona/project_template.git	# git 프로젝트 주소 
-
-# 매크로들
+# git 프로젝트 주소
+PROJECT_REPO=$(subst .makefile_config:PROJECT_REPO=,,$(shell grep -r "PROJECT_REPO=" .makefile_config))
 PROJECT_NAME=$(basename $(notdir $(PROJECT_REPO)))
+
+# CURDIR_WIN(CURDIR 윈도우 주소 버전)
 CURDIR_WIN=$(subst /,\,$(CURDIR))
+
+# 현재 운영체제 타입
 OS_NAME =
 
 # 현재 운영체제 확인
@@ -19,10 +21,20 @@ else
 	endif
 endif
 
-.PHONY: help check info install install_opencv project clean_install clean_project
+.PHONY: update_config help check info install install_opencv project clean_install clean_project
+
+# Makefile 변수 저장하기
+update_config:
+ifeq ($(OS_NAME), MACOS)
+	@echo "PROJECT_REPO=$(PROJECT_REPO) \n" > .makefile_config
+endif
+ifeq ($(OS_NAME), WIN32)
+	@chcp 65001
+	@echo PROJECT_REPO=$(PROJECT_REPO) \n > .makefile_config
+endif
 
 # 도움말 출력
-help:
+help: update_config
 ifeq ($(OS_NAME), MACOS)
 	@echo
 	@echo "사용 예시:"
@@ -74,7 +86,7 @@ ifeq ($(OS_NAME), WIN32)
 endif
 
 # 설치 확인
-check:
+check: update_config
 ifeq ($(OS_NAME), MACOS)
 	@echo
 	@echo "  make  : $(shell which make)"
@@ -91,7 +103,7 @@ ifeq ($(OS_NAME), WIN32)
 	@echo .
 endif
 
-info:
+info: update_config
 ifeq ($(OS_NAME), MACOS)
 	@echo
 	@echo "  project : https://github.com/kimgeona/project.git"
@@ -117,10 +129,10 @@ ifeq ($(OS_NAME), WIN32)
 endif
 
 # 지원되는 라이브러리 전체 다운 및 빌드
-install: install_opencv
+install: update_config install_opencv
 
 # OpenCV 라이브러리 설치 및 빌드
-install_opencv:
+install_opencv: update_config
 ifeq ($(OS_NAME), MACOS)
 	@if [ -d opencv ]; \
 	then \
@@ -170,7 +182,7 @@ ifeq ($(OS_NAME), WIN32)
 endif
 
 # OpenCV 프로젝트 생성
-project:
+project: update_config
 ifeq ($(OS_NAME), MACOS)
 	@if [ -d $(PROJECT_NAME) ]; \
 	then \
@@ -206,7 +218,7 @@ endif
 
 
 # install 관련 파일들 전부 제거
-clean_install:
+clean_install: update_config
 ifeq ($(OS_NAME), MACOS)
 	@echo "clean_install : OpenCV 라이브러리를 삭제합니다."
 	@rm -rf ./opencv
@@ -235,7 +247,7 @@ endif
 
 
 # 프로젝트 관련 파일들 전부 제거
-clean_project:
+clean_project: update_config
 ifeq ($(OS_NAME), MACOS)
 	@echo "clean_project : $(PROJECT_NAME)를 삭제합니다."
 	@rm -rf ./$(PROJECT_NAME)
