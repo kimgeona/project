@@ -1,14 +1,5 @@
-# git 프로젝트 주소
-PROJECT_REPO=$(subst .makefile_config:PROJECT_REPO=,,$(shell grep -r "PROJECT_REPO=" .makefile_config))
-PROJECT_NAME=$(basename $(notdir $(PROJECT_REPO)))
-
-# CURDIR_WIN(CURDIR 윈도우 주소 버전)
-CURDIR_WIN=$(subst /,\,$(CURDIR))
-
 # 현재 운영체제 타입
 OS_NAME =
-
-# 현재 운영체제 확인
 ifeq ($(OS), Windows_NT)
 	OS_NAME = WIN32
 else
@@ -21,10 +12,30 @@ else
 	endif
 endif
 
-.PHONY: update_config help check info install install_opencv project clean_install clean_project
+
+# 변수 : git 프로젝트 주소
+PROJECT_REPO=$(subst .makefile_config:PROJECT_REPO=,,$(shell grep -r "PROJECT_REPO=" .makefile_config))
+# 변수 : git 프로젝트 이름
+PROJECT_NAME=$(basename $(notdir $(PROJECT_REPO)))
+# 변수 : CURDIR 윈도우 주소 형식
+CURDIR_WIN=$(subst /,\,$(CURDIR))
+
+
+.PHONY: create_config update_config help check info install install_opencv project clean_install clean_project
+
+# .makefile_config 없으면 생성하기
+create_config:
+ifeq ($(wildcard .makefile_config),)
+ifeq ($(OS_NAME), MACOS)
+	@echo "PROJECT_REPO=https://github.com/kimgeona/project_template.git \n" > .makefile_config
+endif
+ifeq ($(OS_NAME), WIN32)
+	@echo PROJECT_REPO=https://github.com/kimgeona/project_template.git \n > .makefile_config
+endif
+endif
 
 # Makefile 변수 저장하기
-update_config:
+update_config: create_config
 ifeq ($(OS_NAME), MACOS)
 	@echo "PROJECT_REPO=$(PROJECT_REPO) \n" > .makefile_config
 endif
