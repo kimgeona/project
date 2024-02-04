@@ -1,6 +1,9 @@
 # folders
 */
 
+# files
+.makefile_config
+
 # MacOS ignore
 .DS_Store
 # Windows ignore

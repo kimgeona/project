@@ -1,22 +1,27 @@
-# 현재 운영체제 타입
-OS_NAME =
+# 변수 : 현재 운영체제 정보
 ifeq ($(OS), Windows_NT)
-	OS_NAME = WIN32
+OS_NAME = WIN32
 else
-	OS_NAME = $(shell uname)
-	ifeq ($(OS_NAME), Linux)
-		OS_NAME = LINUX
-	endif
-	ifeq ($(OS_NAME), Darwin)
-		OS_NAME = MACOS
-	endif
+OS_NAME = $(shell uname)
+ifeq ($(OS_NAME), Linux)
+OS_NAME = LINUX
+endif
+ifeq ($(OS_NAME), Darwin)
+OS_NAME = MACOS
+endif
 endif
 
-
 # 변수 : git 프로젝트 주소
+ifeq ($(OS_NAME), MACOS)
 PROJECT_REPO=$(subst .makefile_config:PROJECT_REPO=,,$(shell grep -r "PROJECT_REPO=" .makefile_config))
+endif
+ifeq ($(OS_NAME), WIN32)
+PROJECT_REPO=$(subst PROJECT_REPO=,,$(shell findstr "PROJECT_REPO=" .makefile_config))
+endif
+
 # 변수 : git 프로젝트 이름
 PROJECT_NAME=$(basename $(notdir $(PROJECT_REPO)))
+
 # 변수 : CURDIR 윈도우 주소 형식
 CURDIR_WIN=$(subst /,\,$(CURDIR))
 
@@ -30,7 +35,8 @@ ifeq ($(OS_NAME), MACOS)
 	@echo "PROJECT_REPO=https://github.com/kimgeona/project_template.git \n" > .makefile_config
 endif
 ifeq ($(OS_NAME), WIN32)
-	@echo PROJECT_REPO=https://github.com/kimgeona/project_template.git \n > .makefile_config
+	@chcp 65001
+	@echo PROJECT_REPO=https://github.com/kimgeona/project_template.git > .makefile_config
 endif
 endif
 
@@ -41,7 +47,7 @@ ifeq ($(OS_NAME), MACOS)
 endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
-	@echo PROJECT_REPO=$(PROJECT_REPO) \n > .makefile_config
+	@echo PROJECT_REPO=$(PROJECT_REPO) > .makefile_config
 endif
 
 # 도움말 출력
