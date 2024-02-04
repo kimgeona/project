@@ -117,25 +117,25 @@ endif
 info: update_config
 ifeq ($(OS_NAME), MACOS)
 	@echo
-	@echo "  project : https://github.com/kimgeona/project.git"
-	@echo "  $(PROJECT_NAME) : $(PROJECT_REPO)"
+	@echo "  PROJECT_REPO : $(PROJECT_REPO)"
 	@echo
 	@echo "  Writer : "
 	@echo "    Geona Kim"
 	@echo "    kimgeona77@gmail.com"
+	@echo "    https://github.com/kimgeona/project.git"
 	@echo
 endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
 	@echo   _
-	@echo   project : https://github.com/kimgeona/project.git
-	@echo   $(PROJECT_NAME) : $(PROJECT_REPO)
+	@echo   PROJECT_REPO : $(PROJECT_REPO)
 	@echo   _
 	@echo   OpenCV Path : $(shell dir /s /b /ad $(CURDIR_WIN)\opencv_install\x64\bin | findstr "vc*")
 	@echo   _
 	@echo   Writer : 
 	@echo     Geona Kim
 	@echo     kimgeona77@gmail.com
+	@echo     https://github.com/kimgeona/project.git
 	@echo .
 endif
 
