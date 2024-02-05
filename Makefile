@@ -213,7 +213,7 @@ ifeq ($(OS_NAME), MACOS)
 		echo "project : 프로젝트 $(PROJECT_NAME)_build가 이미 존재합니다."; \
 	else \
 		echo "project : 프로젝트 $(PROJECT_NAME)를 빌드 합니다."; \
-		cmake -S./$(PROJECT_NAME) -B./$(PROJECT_NAME)_build -GXcode -DOpenCV_DIR=../opencv_build; \
+		cmake -S./$(PROJECT_NAME) -B./$(PROJECT_NAME)/build -GXcode -DOpenCV_DIR=../opencv_build; \
 	fi
 	@echo "project : 완료."
 endif
@@ -229,7 +229,7 @@ ifeq ($(OS_NAME), WIN32)
 		echo project : 프로젝트 $(PROJECT_NAME)_build가 이미 존재합니다. \
 	) else ( \
 		echo project : 프로젝트 $(PROJECT_NAME)를 빌드 합니다. & \
-		cmake -S.\\$(PROJECT_NAME) -B.\\$(PROJECT_NAME)_build -G "Visual Studio 17 2022" -A x64 -DOpenCV_DIR=..\\opencv_build \
+		cmake -S.\\$(PROJECT_NAME) -B.\\$(PROJECT_NAME)\\build -G "Visual Studio 17 2022" -A x64 -DOpenCV_DIR=..\\opencv_build \
 	)
 endif
 
