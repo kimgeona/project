@@ -151,26 +151,31 @@ install: update_config install_opencv
 # OpenCV 라이브러리 설치 및 빌드
 install_opencv: update_config
 ifeq ($(OS_NAME), MACOS)
-	@if [ -d opencv ]; \
-	then \
+	@if [ -d opencv ]; then \
 		echo "install : 이미 설치된 OpenCV 라이브러리를 사용합니다."; \
 	else \
-		echo "install : OpenCV 라이브러리를 다운받습니다."; \
-		git clone https://github.com/opencv/opencv.git; \
+		echo "install : OpenCV 라이브러리를 다운받습니다." \
+		&& git clone https://github.com/opencv/opencv.git; \
 	fi
-	@if [ -d opencv_build ]; \
-	then \
+	@if [ -d opencv_build ]; then \
 		echo "install : 이미 빌드된 OpenCV 라이브러리가 존재합니다."; \
 	else \
-		echo "install : OpenCV 라이브러리를 빌드합니다."; \
-		mkdir opencv_build; \
-		cmake -GXcode -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX=./opencv_install -S./opencv -B./opencv_build; \
-		cmake --build ./opencv_build -j7 --config debug; \
-		cmake --build ./opencv_build -j7 --config release; \
-		cmake --build ./opencv_build -j7 --target install --config debug; \
-		cmake --build ./opencv_build -j7 --target install --config release; \
+		(\
+		echo "install : OpenCV 라이브러리를 빌드합니다." \
+		&& mkdir opencv_build \
+		&& cmake -GXcode -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX=./opencv_install -S./opencv -B./opencv_build \
+		&& cmake --build ./opencv_build -j7 --config debug \
+		&& cmake --build ./opencv_build -j7 --config release \
+		&& cmake --build ./opencv_build -j7 --target install --config debug \
+		&& cmake --build ./opencv_build -j7 --target install --config release \
+		&& echo "install : 완료." \
+		)\
+		|| (\
+		echo install : OpenCV 라이브러리 빌드에 실패했습니다. 빌드 전으로 되돌립니다. \
+		&& rm -rf ./opencv_build \
+		&& rm -rf ./opencv_install \
+		);\
 	fi
-	@echo "install : 완료."
 endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
@@ -198,6 +203,7 @@ ifeq ($(OS_NAME), WIN32)
 		&& echo -- 환경변수 Path에 $(shell dir /s /b /ad $(CURDIR_WIN)\opencv_install\x64\bin | findstr "vc*")를 추가하세요. \
 		&& echo -- \
 		&& echo -- \
+		&& echo install : 완료. \
 		)\
 		|| (\
 		echo install : OpenCV 라이브러리 빌드에 실패했습니다. 빌드 전으로 되돌립니다. \
@@ -210,21 +216,25 @@ endif
 # OpenCV 프로젝트 생성
 project: update_config
 ifeq ($(OS_NAME), MACOS)
-	@if [ -d $(PROJECT_NAME) ]; \
-	then \
+	@if [ -d $(PROJECT_NAME) ]; then \
 		echo "project : 프로젝트 $(PROJECT_NAME)가 이미 존재합니다."; \
 	else \
-		echo "project : 프로젝트 $(PROJECT_NAME)를 git clone 합니다."; \
-		git clone $(PROJECT_REPO); \
+		echo "project : 프로젝트 $(PROJECT_NAME)를 git clone 합니다." \
+		&& git clone $(PROJECT_REPO); \
 	fi
-	@if [ -d $(PROJECT_NAME)_build ]; \
-	then \
+	@if [ -d $(PROJECT_NAME)_build ]; then \
 		echo "project : 프로젝트 $(PROJECT_NAME)_build가 이미 존재합니다."; \
 	else \
-		echo "project : 프로젝트 $(PROJECT_NAME)를 빌드 합니다."; \
-		cmake -S./$(PROJECT_NAME) -B./$(PROJECT_NAME)/build -GXcode -DOpenCV_DIR=../opencv_build; \
+		(\
+		echo "project : 프로젝트 $(PROJECT_NAME)를 빌드 합니다." \
+		&& cmake -S./$(PROJECT_NAME) -B./$(PROJECT_NAME)/build -GXcode -DOpenCV_DIR=../opencv_build \
+		&& echo "project : 완료."
+		)\
+		|| (\
+		echo "project : 프로젝트 $(PROJECT_NAME) 빌드에 실패했습니다. 빌드 전으로 되돌립니다." \
+		&& rm -rf ./$(PROJECT_NAME) \
+		);\
 	fi
-	@echo "project : 완료."
 endif
 ifeq ($(OS_NAME), WIN32)
 	@chcp 65001
@@ -252,7 +262,7 @@ endif
 
 
 # install 관련 파일들 전부 제거
-clean_install: update_config
+clean_opencv: update_config
 ifeq ($(OS_NAME), MACOS)
 	@echo "clean_install : OpenCV 라이브러리를 삭제합니다."
 	@rm -rf ./opencv
