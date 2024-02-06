@@ -188,7 +188,7 @@ ifeq ($(OS_NAME), WIN32)
 	)
 	@if exist opencv_build (\
 		echo install : 이미 빌드된 OpenCV 라이브러리가 존재합니다. \
-	)
+	)\
 	else (\
 		(\
 		echo install : OpenCV 라이브러리를 빌드합니다.. \
