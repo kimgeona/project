@@ -171,7 +171,7 @@ ifeq ($(OS_NAME), MACOS)
 		&& echo "install : 완료." \
 		)\
 		|| (\
-		echo install : OpenCV 라이브러리 빌드에 실패했습니다. 빌드 전으로 되돌립니다. \
+		echo "install : OpenCV 라이브러리 빌드에 실패했습니다. 빌드 전으로 되돌립니다." \
 		&& rm -rf ./opencv_build \
 		&& rm -rf ./opencv_install \
 		);\
@@ -222,13 +222,13 @@ ifeq ($(OS_NAME), MACOS)
 		echo "project : 프로젝트 $(PROJECT_NAME)를 git clone 합니다." \
 		&& git clone $(PROJECT_REPO); \
 	fi
-	@if [ -d $(PROJECT_NAME)_build ]; then \
+	@if [ -d $(PROJECT_NAME)/build ]; then \
 		echo "project : 프로젝트 $(PROJECT_NAME)_build가 이미 존재합니다."; \
 	else \
 		(\
 		echo "project : 프로젝트 $(PROJECT_NAME)를 빌드 합니다." \
 		&& cmake -S./$(PROJECT_NAME) -B./$(PROJECT_NAME)/build -GXcode -DOpenCV_DIR=../opencv_build \
-		&& echo "project : 완료."
+		&& echo "project : 완료." \
 		)\
 		|| (\
 		echo "project : 프로젝트 $(PROJECT_NAME) 빌드에 실패했습니다. 빌드 전으로 되돌립니다." \
@@ -245,7 +245,7 @@ ifeq ($(OS_NAME), WIN32)
 		echo project : 프로젝트 $(PROJECT_NAME)를 git clone 합니다. \
 		&& git clone $(PROJECT_REPO) \
 	)
-	@if exist $(PROJECT_NAME)_build (\
+	@if exist $(PROJECT_NAME)\\build (\
 		echo project : 프로젝트 $(PROJECT_NAME)_build가 이미 존재합니다. \
 	)\
 	else (\
