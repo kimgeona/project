@@ -184,7 +184,7 @@ ifeq ($(OS_NAME), WIN32)
 		echo install : 이미 빌드된 OpenCV 라이브러리가 존재합니다. \
 	) else ( \
 		echo install : OpenCV 라이브러리를 빌드합니다.. & \
-		cmake -G"Visual Studio 16 2019" -A x64 -DBUILD_EXAMPLES=ON -DINSTALL_CREATE_DISTRIB=ON -DCMAKE_INSTALL_PREFIX=.\\opencv_install -S.\\opencv -B.\\opencv_build & \
+		cmake -G "Visual Studio 17 2022" -A x64 -DBUILD_EXAMPLES=ON -DINSTALL_CREATE_DISTRIB=ON -DCMAKE_INSTALL_PREFIX=.\\opencv_install -S.\\opencv -B.\\opencv_build & \
 		cmake --build .\\opencv_build -j7 --config debug & \
 		cmake --build .\\opencv_build -j7 --config release & \
 		cmake --build .\\opencv_build -j7 --target install --config debug & \
