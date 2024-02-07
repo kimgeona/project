@@ -252,7 +252,7 @@ ifeq ($(OS_NAME), WIN32)
 		(\
 		echo project : 프로젝트 $(PROJECT_NAME)를 빌드 합니다. \
 		&& cmake -S.\\$(PROJECT_NAME) -B.\\$(PROJECT_NAME)\\build -G "Visual Studio 17 2022" -A x64 -DOpenCV_DIR=..\\opencv_build \
-		)
+		)\
 		|| (\
 		echo project : 프로젝트 $(PROJECT_NAME) 빌드에 실패했습니다. 빌드 전으로 되돌립니다. \
 		&& if exist .\$(PROJECT_NAME) rmdir /s /q .\$(PROJECT_NAME) \
