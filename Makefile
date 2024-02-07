@@ -200,7 +200,7 @@ ifeq ($(OS_NAME), WIN32)
 		&& echo -- \
 		&& echo -- \
 		&& echo -- !중요! \
-		&& echo -- 환경변수 Path에 $(shell dir /s /b /ad $(CURDIR_WIN)\opencv_install\x64\bin | findstr "vc*")를 추가하세요. \
+		&& echo -- make info 명령어를 입력하여 OpenCV Path를 확인하고 이를 환경변수에 등록하세요. \
 		&& echo -- \
 		&& echo -- \
 		&& echo install : 완료. \
